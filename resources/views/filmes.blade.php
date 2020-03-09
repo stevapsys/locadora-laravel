@@ -9,6 +9,9 @@
     <body>
         <div class="container">
             <h1 class="title"> Lista de Filmes </h1>
+            @if(session('mensagem'))
+            <div class="alert alert-success"> {{session('mensagem')}}</div>
+            @endif
             <table class="table">
                 <thead>
                     <tr>
@@ -18,11 +21,12 @@
                 <tbody>
                     @foreach($filmes as $filme)
                     <tr>
-                        <td>{{$filme}}</td>
+                        <td>{{$filme->title}}</td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
+                {{$filmes->links()}}
             <div class="text-right m-2">
                 <a href="/adicionar-filme" class="btn btn-success">Adicionar Filme</a>
             </div>

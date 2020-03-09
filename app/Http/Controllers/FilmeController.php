@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Movie;
 
 class FilmeController extends Controller
 {
     public function procurarFilmeId ($id){
-        $filmes = [
+       //criando um array 
+        /* $filmes = [
             1 => "Toy Story",
             2 => "Procurando Nemo",
             3 => "Avatar",
@@ -16,37 +18,40 @@ class FilmeController extends Controller
             6 => "Mary e Max"
             ];
         //code here
-        return "O filme escolhido foi: $filmes[$id]";
+        return "O filme escolhido foi: $filmes[$id]"; */
+
+        //puxando o array do banco de dados 
+        $filmes = Movie::find($id);
+        $filme = $filmes -> title; 
+        return "retornar o $filme"; 
     }
 
     public function procurarFilmeNome ($nome) {
-        $filmes = [
+       /* $filmes = [
             1 => "Toy Story",
             2 => "Procurando Nemo",
             3 => "Avatar",
             4 => "Star Wars: Episódio V",
             5 => "Up",
             6 => "Mary e Max"
-            ];
-        
-     
-        foreach ($filmes as $filme) {
-            if (strtolower($filme) == strtolower($nome)) {
-                return $filme; 
+            ]; 
+            foreach ($filmes as $filme) {
+                if (strtolower($filme) == strtolower($nome)) {
+                    return $filme; 
+    
+                }
+            }*/
 
-            }
-        }
+        $filme = Movie::query()->where ('title', $nome)->first();
+        $titulo = $filme->title;
+        return $titulo; 
+     
     } 
 
     public function listar () {
-        $filmes = [
-            1 => "Toy Story",
-            2 => "Procurando Nemo",
-            3 => "Avatar",
-            4 => "Star Wars: Episódio V",
-            5 => "Up",
-            6 => "Mary e Max"
-            ];
+         //trazendo a lista de filmes do banco de dados 
+         //paginate -> é pra paginar, assim separa a lista por páginas. Pra isso, no view tem que colocar {{ $filmes->links() }}
+        $filmes = Movie::query()->paginate();
         return view('filmes', ['filmes' => $filmes]);
     }
     
@@ -54,8 +59,17 @@ class FilmeController extends Controller
         return view('adicionar-filme');
     }
 
-    public function adicionarFilmePost() {
-        return "Formulário foi salvo"; 
+    public function adicionarFilmePost(Request $request) {
+       // dd($request->classificacao);
+        $filmeNovo = new Movie();
+        $filmeNovo->title = $request->titulo;
+        $filmeNovo->rating = $request->classificacao; 
+        $filmeNovo->awards= $request->premios;  
+        $filmeNovo->length= $request->duracao;  
+        $filmeNovo->release_date= "$request->ano-$request->mes-$request->dia 00:00:00";
+        $filmeNovo->save(); 
+
+        return redirect('/filmes')->with('mensagem', 'Formulario salvo!');
     }
 
 }
