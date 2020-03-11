@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Movie;
+//ADICIONAR A USE DA PASTA CRIADA PARA FAZER AS VALIDAÇÕES
+use App\Http\Requests\FilmeRequest;
+
 
 class FilmeController extends Controller
 {
@@ -59,7 +62,8 @@ class FilmeController extends Controller
         return view('adicionar-filme');
     }
 
-    public function adicionarFilmePost(Request $request) {
+        // o request é para enviar uma requisição do controller para o servidor. você pode usar ou não, as vezes já é obvio que é uma requisão, então ele já entende
+    public function adicionarFilmePost(FilmeRequest $request) {
        // dd($request->classificacao);
         $filmeNovo = new Movie();
         $filmeNovo->title = $request->titulo;
