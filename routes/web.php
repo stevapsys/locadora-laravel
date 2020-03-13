@@ -30,3 +30,10 @@ Route::post('/adicionar-usuario', 'UserController@store');
 
 Route::get('/usuarios', 'UserController@index');
 
+Route::get('/collection', function() {
+    //$movie = App\Movie::find(1);
+    //dd($movie->genre->toArray());
+
+    $actor = App\Actor::find(1);
+    dd($actor->first_name, $actor->favorite->toArray());
+});

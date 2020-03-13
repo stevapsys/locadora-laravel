@@ -24,10 +24,10 @@ class FilmeRequest extends FormRequest
     public function rules()
     {
         return [
-            'titulo' => 'required',
-            'classificacao' => 'required|numeric',
-            'premios' => 'required|integer',
-            'duracao' => 'required|integer',
+            'title' => 'required',
+            'rating' => 'required|numeric',
+            'awards' => 'required|integer',
+            'length' => 'required|integer',
             'dia' => 'required',
             'mes' => 'required',
             'ano' => 'required',
@@ -37,13 +37,13 @@ class FilmeRequest extends FormRequest
     //para traduzir a mensagem de erro - outra alternativa é mexer no lang em resourcer
     public function messages() {
         return [
-            'titulo.required' => 'O campo título é obrigatório!',
-            'classificacao.required' => 'O campo de classificação é obrigatório!',
-            'classificacao.numeric' => 'Esse campo deve ser um número',
-            'premios.required' => 'O campo de classificação é obrigatório!',
-            'premios.integer' => 'Esse campo deve ser um número inteiro!',
-            'duracao.required' => 'O campo de duração é obrigatório!',
-            'duracao.integer' => 'Esse campo deve ser um número inteiro!',
+            'title.required' => 'O campo título é obrigatório!',
+            'rating.required' => 'O campo de classificação é obrigatório!',
+            'rating.numeric' => 'Esse campo deve ser um número',
+            'awards.required' => 'O campo de classificação é obrigatório!',
+            'awards.integer' => 'Esse campo deve ser um número inteiro!',
+            'length.required' => 'O campo de duração é obrigatório!',
+            'length.integer' => 'Esse campo deve ser um número inteiro!',
             'dia.required' => 'Complete o dia',
             'mes.required' => 'Complete o mês',
             'ano.required' => 'Complete o ano',

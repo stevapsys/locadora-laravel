@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Movie;
 //ADICIONAR A USE DA PASTA CRIADA PARA FAZER AS VALIDAÇÕES
 use App\Http\Requests\FilmeRequest;
+use App\Genre;
 
 
 class FilmeController extends Controller
@@ -47,8 +48,7 @@ class FilmeController extends Controller
 
         $filme = Movie::query()->where ('title', $nome)->first();
         $titulo = $filme->title;
-        return $titulo; 
-     
+        return $titulo;      
     } 
 
     public function listar () {
@@ -59,19 +59,29 @@ class FilmeController extends Controller
     }
     
     public function adicionarFilme() {
-        return view('adicionar-filme');
+        //select * from GENRES 
+        $genres = Genre::all();
+        //para acrescentar os gêneros do banco de dados na label de selecionar gêneros
+        return view('adicionar-filme',['genres'=> $genres]);
     }
 
         // o request é para enviar uma requisição do controller para o servidor. você pode usar ou não, as vezes já é obvio que é uma requisão, então ele já entende
     public function adicionarFilmePost(FilmeRequest $request) {
        // dd($request->classificacao);
-        $filmeNovo = new Movie();
+      /*  $filmeNovo = new Movie();
         $filmeNovo->title = $request->titulo;
         $filmeNovo->rating = $request->classificacao; 
         $filmeNovo->awards= $request->premios;  
         $filmeNovo->length= $request->duracao;  
         $filmeNovo->release_date= "$request->ano-$request->mes-$request->dia 00:00:00";
-        $filmeNovo->save(); 
+        $filmeNovo->genre_id=$request->category_id; 
+        $filmeNovo->save();  */
+
+        $data = $request->all();        
+        $filmeNovo = new Movie();
+        $filmeNovo->release_date= "$request->ano-$request->mes-$request->dia 00:00:00";
+        $filmeNovo->fill($data)->save();
+
 
         return redirect('/filmes')->with('mensagem', 'Formulario salvo!');
     }

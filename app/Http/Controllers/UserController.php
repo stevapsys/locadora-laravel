@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 //ADICIONAR A USE DA PASTA CRIADA PARA FAZER AS VALIDAÇÕES
 use App\Http\Requests\UserRequest;
 
+use App\User; 
+
 class UserController extends Controller
 {
     public function index() {
