@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+//ROTAS PRA REDIRECIONAMENTO DE PÁGINAS
 Route::get('/episodes', 'EpisodeController@index');
 
 Route::get('/filmes/{id}', 'filmeController@procurarFilmeId');
@@ -30,6 +32,7 @@ Route::post('/adicionar-usuario', 'UserController@store');
 
 Route::get('/usuarios', 'UserController@index');
 
+//ROUTA PRA MOSTRAR UMA INFO DO BANCO DE DADOS
 Route::get('/collection', function() {
     //$movie = App\Movie::find(1);
     //dd($movie->genre->toArray());
@@ -37,3 +40,6 @@ Route::get('/collection', function() {
     $actor = App\Actor::find(1);
     dd($actor->first_name, $actor->favorite->toArray());
 });
+
+//rota para a API
+Route::apiResource('filmes', 'ApiFilmeController');
